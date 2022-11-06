@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxf2dpia6p6jx"]
+
+[ext_resource type="Script" path="res://Code/ResourceCamp.cs" id="1_nrbht"]
+[ext_resource type="Texture2D" uid="uid://bsy4iqhnfte5u" path="res://Assets/cartographypack/PNG/Default/campfire.png" id="2_qfk8r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qdswh"]
+size = Vector2(64, 64)
+
+[node name="ResourceCamp" type="Node2D"]
+script = ExtResource("1_nrbht")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_qfk8r")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 20.0
+offset_top = -31.0
+offset_right = 60.0
+offset_bottom = -8.0
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_qdswh")
+
+[connection signal="input_event" from="Area2D" to="." method="InputEvent"]

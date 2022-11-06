@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://bd8x4bnks6w5n"]
+
+[ext_resource type="Script" path="res://Code/GameTime.cs" id="1_jmmue"]
+[ext_resource type="Texture2D" uid="uid://bumpie14bm3h4" path="res://Assets/cartographypack/Textures/parchmentAncient.png" id="1_nqtyb"]
+[ext_resource type="PackedScene" uid="uid://bxf2dpia6p6jx" path="res://resource_camp.tscn" id="3_apiog"]
+[ext_resource type="PackedScene" uid="uid://ovh212lre6td" path="res://settlement.tscn" id="3_fyjul"]
+
+[node name="Map" type="Node2D"]
+script = ExtResource("1_jmmue")
+
+[node name="ParchmentAncient" type="Sprite2D" parent="."]
+position = Vector2(977, 521)
+rotation = 1.5708
+scale = Vector2(2.04799, 2.04799)
+texture = ExtResource("1_nqtyb")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="UI"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Lumber: 0
+"
+
+[node name="ProgressBar" type="ProgressBar" parent="UI"]
+offset_left = 86.0
+offset_right = 527.0
+offset_bottom = 27.0
+
+[node name="LumberCamp" parent="." instance=ExtResource("3_apiog")]
+position = Vector2(697, 282)
+
+[node name="Tulum" parent="." instance=ExtResource("3_fyjul")]
+position = Vector2(781, 432)
+
+[node name="ResourceCamp" parent="." instance=ExtResource("3_apiog")]
+position = Vector2(1028, 319)
