@@ -1,18 +1,26 @@
 [gd_scene load_steps=5 format=3 uid="uid://ovh212lre6td"]
 
 [ext_resource type="Script" path="res://Code/Settlement.cs" id="1_xnc8f"]
-[ext_resource type="Script" path="res://Code/SettlementSelect.cs" id="2_hk6rw"]
 [ext_resource type="Texture2D" uid="uid://cu814st3bdl5j" path="res://Assets/cartographypack/PNG/Default/houseSmall.png" id="2_srojv"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_54i1v"]
+script/source = "using Godot;
+using System;
+
+public partial class SettlementSelect : Area2D
+{
+
+}
+"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_774nn"]
 size = Vector2(64, 64)
 
 [node name="Settlement" type="Node2D"]
 script = ExtResource("1_xnc8f")
-metadata/_edit_group_ = true
 
 [node name="Area2D" type="Area2D" parent="."]
-script = ExtResource("2_hk6rw")
+script = SubResource("CSharpScript_54i1v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_774nn")

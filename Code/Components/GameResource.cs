@@ -1,11 +1,9 @@
 using System;
 using Godot;
 
-public partial class GameResource : Node {
-	[Export]
+public partial class GameResource {
 	public Resources ResourceName { get; set; }
 
-	[Export]
 	public int Amount { get; set; }
 
 	public GameResource(Resources name = Resources.Lumber, int amount = 0) {

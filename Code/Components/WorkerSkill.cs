@@ -1,16 +1,13 @@
 using System;
 using Godot;
 
-public partial class WorkerSkill : Node {
-	[Export]
-	public Resources SkillName { get; set; }
+public class WorkerSkill {
+    public Skills Name { get; set; }
+    public float Amount { get; set; }
 
-	[Export]
-	public int Amount { get; set; }
-
-	public GameResource(, int amount = 0) {
-		SkillName = name;
-		Amount = amount;
-	}
+    public WorkerSkill(Skills skill = Skills.Traveling, float amount = 0) {
+        Name = skill;
+        Amount = amount;
+    }
 
 }

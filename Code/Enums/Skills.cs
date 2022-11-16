@@ -1,0 +1,22 @@
+public enum Skills {
+    Traveling,
+    Sailing,
+    Mining,
+    Woodcutting,
+    Farming,
+    Fishing,
+    Hunting,
+    Building,
+    Crafting,
+    Cooking,
+    Smithing,
+    Tailoring,
+    Carpentry,
+    Masonry,
+    Leatherworking,
+    Jewelry,
+    Alchemy,
+    Medicine,
+    Engineering,
+
+}

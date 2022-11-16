@@ -1,41 +1,192 @@
-[gd_scene load_steps=5 format=3 uid="uid://bd8x4bnks6w5n"]
+[gd_scene load_steps=7 format=3 uid="uid://2unbrxljl35s"]
 
-[ext_resource type="Script" path="res://Code/GameTime.cs" id="1_jmmue"]
+[ext_resource type="Script" path="res://Code/MapUi.cs" id="1_jmmue"]
 [ext_resource type="Texture2D" uid="uid://bumpie14bm3h4" path="res://Assets/cartographypack/Textures/parchmentAncient.png" id="1_nqtyb"]
 [ext_resource type="PackedScene" uid="uid://bxf2dpia6p6jx" path="res://resource_camp.tscn" id="3_apiog"]
-[ext_resource type="PackedScene" uid="uid://ovh212lre6td" path="res://settlement.tscn" id="3_fyjul"]
+[ext_resource type="PackedScene" uid="uid://ovh212lre6td" path="res://settlement.tscn" id="4_i1klj"]
+
+[sub_resource type="Theme" id="Theme_sviwh"]
+
+[sub_resource type="Theme" id="Theme_rsmbk"]
+default_font_size = 24
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_jmmue")
 
 [node name="ParchmentAncient" type="Sprite2D" parent="."]
-position = Vector2(977, 521)
+position = Vector2(932, 592)
 rotation = 1.5708
 scale = Vector2(2.04799, 2.04799)
 texture = ExtResource("1_nqtyb")
 
-[node name="UI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="UI" type="VBoxContainer" parent="."]
+offset_left = 25.0
+offset_right = 342.0
+offset_bottom = 711.0
 
-[node name="Label" type="Label" parent="UI"]
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Lumber: 0
+[node name="Time" type="SplitContainer" parent="UI"]
+layout_mode = 2
+offset_right = 317.0
+offset_bottom = 27.0
+
+[node name="TimeLabel" type="Label" parent="UI/Time"]
+layout_mode = 2
+offset_right = 36.0
+offset_bottom = 27.0
+size_flags_vertical = 1
+text = "days
 "
 
-[node name="ProgressBar" type="ProgressBar" parent="UI"]
-offset_left = 86.0
-offset_right = 527.0
+[node name="TimeProgress" type="ProgressBar" parent="UI/Time"]
+layout_mode = 2
+offset_left = 48.0
+offset_right = 317.0
 offset_bottom = 27.0
+size_flags_horizontal = 3
+
+[node name="SelectedView" type="VBoxContainer" parent="UI"]
+layout_mode = 2
+offset_top = 31.0
+offset_right = 317.0
+offset_bottom = 95.0
+theme = SubResource("Theme_sviwh")
+
+[node name="Header" type="Label" parent="UI/SelectedView"]
+layout_mode = 2
+offset_right = 317.0
+offset_bottom = 37.0
+theme = SubResource("Theme_rsmbk")
+text = "
+"
+
+[node name="Data" type="Label" parent="UI/SelectedView"]
+layout_mode = 2
+offset_top = 41.0
+offset_right = 317.0
+offset_bottom = 64.0
+
+[node name="Settlement" type="GridContainer" parent="UI/SelectedView"]
+visible = false
+layout_mode = 2
+offset_top = 68.0
+offset_right = 317.0
+offset_bottom = 111.0
+
+[node name="HireWorker" type="Button" parent="UI/SelectedView/Settlement"]
+layout_mode = 2
+offset_right = 102.0
+offset_bottom = 31.0
+text = "Hire Worker
+"
+
+[node name="Workers" type="GridContainer" parent="UI/SelectedView/Settlement"]
+layout_mode = 2
+offset_top = 35.0
+offset_right = 102.0
+offset_bottom = 35.0
+columns = 3
+
+[node name="Buildings" type="GridContainer" parent="UI/SelectedView/Settlement"]
+layout_mode = 2
+offset_top = 39.0
+offset_right = 102.0
+offset_bottom = 39.0
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/SelectedView/Settlement"]
+layout_mode = 2
+offset_top = 43.0
+offset_right = 102.0
+offset_bottom = 43.0
+
+[node name="Camp" type="GridContainer" parent="UI/SelectedView"]
+visible = false
+layout_mode = 2
+offset_top = 103.0
+offset_right = 106.0
+offset_bottom = 134.0
+columns = 3
+
+[node name="Harvest" type="Button" parent="UI/SelectedView/Camp"]
+layout_mode = 2
+offset_right = 69.0
+offset_bottom = 31.0
+text = "Harvest"
+
+[node name="Worker" type="GridContainer" parent="UI/SelectedView"]
+visible = false
+layout_mode = 2
+offset_top = 68.0
+offset_right = 107.0
+offset_bottom = 103.0
+
+[node name="Buttons" type="GridContainer" parent="UI/SelectedView/Worker"]
+layout_mode = 2
+offset_right = 107.0
+offset_bottom = 31.0
+columns = 3
+
+[node name="Travel" type="Button" parent="UI/SelectedView/Worker/Buttons"]
+layout_mode = 2
+offset_right = 56.0
+offset_bottom = 31.0
+toggle_mode = true
+text = "Travel
+"
+
+[node name="Craft" type="Button" parent="UI/SelectedView/Worker/Buttons"]
+layout_mode = 2
+offset_left = 60.0
+offset_right = 107.0
+offset_bottom = 31.0
+toggle_mode = true
+text = "Craft"
+
+[node name="Skills" type="Button" parent="UI/SelectedView/Worker/Buttons"]
+layout_mode = 2
+offset_right = 8.0
+offset_bottom = 8.0
+toggle_mode = true
+text = "Skills"
+
+[node name="Skills" type="GridContainer" parent="UI/SelectedView/Worker"]
+visible = false
+layout_mode = 2
+offset_top = 35.0
+offset_right = 107.0
+offset_bottom = 35.0
+columns = 3
+
+[node name="Crafting" type="GridContainer" parent="UI/SelectedView/Worker"]
+visible = false
+layout_mode = 2
+offset_right = 40.0
+offset_bottom = 40.0
+columns = 3
+
+[node name="Workshop" type="Button" parent="UI/SelectedView/Worker/Crafting"]
+layout_mode = 2
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Workshop"
+
+[node name="Travel" type="GridContainer" parent="UI/SelectedView/Worker"]
+visible = false
+layout_mode = 2
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="LumberCamp" parent="." instance=ExtResource("3_apiog")]
 position = Vector2(697, 282)
 
-[node name="Tulum" parent="." instance=ExtResource("3_fyjul")]
-position = Vector2(781, 432)
-
 [node name="ResourceCamp" parent="." instance=ExtResource("3_apiog")]
 position = Vector2(1028, 319)
+
+[node name="Tulum" parent="." instance=ExtResource("4_i1klj")]
+position = Vector2(838, 535)
+
+[connection signal="pressed" from="UI/SelectedView/Settlement/HireWorker" to="." method="SettlementHireWorkerClick"]
+[connection signal="pressed" from="UI/SelectedView/Camp/Harvest" to="." method="CampHarvest"]
+[connection signal="toggled" from="UI/SelectedView/Worker/Buttons/Travel" to="." method="WorkerTravelToggle"]
+[connection signal="toggled" from="UI/SelectedView/Worker/Buttons/Craft" to="." method="WorkerCraftToggle"]
+[connection signal="toggled" from="UI/SelectedView/Worker/Buttons/Skills" to="." method="WorkerSkillsToggle"]
+[connection signal="pressed" from="UI/SelectedView/Worker/Crafting/Workshop" to="." method="WorkerCraftWorkshop"]
