@@ -175,6 +175,11 @@ layout_mode = 2
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="Inventory" type="PanelContainer" parent="UI/SelectedView/Worker"]
+layout_mode = 2
+offset_right = 40.0
+offset_bottom = 40.0
+
 [node name="LumberCamp" parent="." instance=ExtResource("3_apiog")]
 position = Vector2(697, 282)
 

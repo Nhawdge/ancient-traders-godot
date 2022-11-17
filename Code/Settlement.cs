@@ -18,6 +18,8 @@ public partial class Settlement : Node, ISelectable {
 	public double babyChance = 0.001f;
 	public double deathChance = 0.00001f;
 
+	public Dictionary<Resources, int> Inventory { get; set; } = new();
+
 	public override void _Ready() {
 		GetNode<MapUi>("/root/Map").SettlementHireWorker += HireWorkerClicked;
 	}
@@ -35,6 +37,9 @@ public partial class Settlement : Node, ISelectable {
 			IsSelected = false;
 			GetNode<Control>("/root/Map/UI/SelectedView").Hide();
 		}
+		if (IsSelected)
+			EmitSignal(SignalName.InfoUpdated);
+
 	}
 
 	public void on_clicked(Node node, InputEvent evt, int shape) {
@@ -73,6 +78,9 @@ public partial class Settlement : Node, ISelectable {
 
 	#region ISelectable 
 
+	[Signal]
+	public delegate void InfoUpdatedEventHandler();
+
 	public bool IsSelected { get; set; }
 
 	public string GetHeader() {
@@ -83,4 +91,5 @@ public partial class Settlement : Node, ISelectable {
 		return $"Population: {Population}\nWealth: {(int)Wealth}\nWorkers: {GetWorkers.Count()}";
 	}
 	#endregion
+
 }

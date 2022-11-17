@@ -11,13 +11,11 @@ public partial class ResourceCamp : Node2D, ISelectable {
 		var home = GetNode(".");
 		var rand = new Random();
 
-		var resourcesToGen = rand.Next(1, 5);
-		while (resourcesToGen-- > 0) {
-			var resource = new GameResource();
-			resource.ResourceName = Resources.Lumber;
-			resource.Amount = rand.Next(1, 100);
-			AvailableResources.Add(resource);
-		}
+		var resource = new GameResource();
+		resource.ResourceName = Resources.Lumber;
+		resource.Amount = rand.Next(30, 100);
+		AvailableResources.Add(resource);
+		Name = resource.ResourceName.ToString() + " camp";
 
 		GetNode<MapUi>("/root/Map").CampHarvest += HarvestResource;
 	}
@@ -26,6 +24,8 @@ public partial class ResourceCamp : Node2D, ISelectable {
 		if (Input.IsKeyPressed(Key.Space)) {
 			IsSelected = false;
 		}
+		if (IsSelected)
+			EmitSignal(SignalName.InfoUpdated);
 	}
 
 	public void InputEvent(Node viewport, InputEvent evt, int shape) {
@@ -38,9 +38,16 @@ public partial class ResourceCamp : Node2D, ISelectable {
 	}
 
 	public void HarvestResource() {
-		if (!IsSelected) {
-			return;
+		var resource = AvailableResources.First();
+		var worker = GetChildren().OfType<Worker>().First();
+		GD.Print($"{worker.Name} is harvesting {resource.ResourceName} from  {Name}");
+		if (resource.Amount > 0) {
+			resource.Amount--;
+			if (!worker.Inventory.TryAdd(resource.ResourceName, 1)) {
+				worker.Inventory[resource.ResourceName]++;
+			}
 		}
+		EmitSignal(SignalName.InfoUpdated);
 	}
 
 	public string GetHeader() {
@@ -49,11 +56,13 @@ public partial class ResourceCamp : Node2D, ISelectable {
 
 	public string GetData() {
 		var labelText = string.Empty;
-		var nodes = GetNode(".").GetChildren().OfType<GameResource>();
-		foreach (var resource in nodes) {
+		foreach (var resource in AvailableResources) {
 			labelText += $"{resource.ResourceName}: {resource.Amount}\n";
 		}
 		return labelText;
 	}
+
+	[Signal]
+	public delegate void InfoUpdatedEventHandler();
 
 }

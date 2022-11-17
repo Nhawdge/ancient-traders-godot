@@ -7,6 +7,7 @@ public partial class Worker : Node, ISelectable {
 	// Called when the node enters the scene tree for the first time.
 
 	public bool IsAvailable { get; set; } = true;
+	public Dictionary<Resources, int> Inventory { get; set; } = new();
 
 	public List<WorkerSkill> Skills { get; set; } = new List<WorkerSkill>();
 	public override void _Ready() {
@@ -19,17 +20,52 @@ public partial class Worker : Node, ISelectable {
 		me.Name = Names.ElementAt(new Random().Next(0, Names.Count));
 	}
 
+	public override void _Process(double delta) {
+		if (IsSelected)
+			EmitSignal(SignalName.InfoUpdated);
+	}
+
 	public string GetHeader() {
 		return Name;
 	}
 
 	public string GetData() {
-		return "Worker"; // string.Join("\n", Skills.Select(s => $"{s.Name}: {s.Amount}"));
+		return "Worker";
 	}
 
 	public void Select() {
 		IsSelected = true;
 		GetNode<MapUi>("/root/Map/").UpdateSelected(this);
+	}
+
+	public void Travel(ISelectable targetNode) {
+		var currentParent = GetParent();
+		currentParent.RemoveChild(this);
+		(targetNode as Node).AddChild(this);
+	}
+
+	public Action DepositInventory(Resources resource) {
+		return () => {
+			var parent = GetParent();
+			if (parent is Settlement settlement) {
+				if (!settlement.Inventory.TryAdd(resource, 1)) {
+					settlement.Inventory[resource]++;
+				}
+				Inventory[resource]--;
+			}
+		};
+	}
+
+	public Action PickUpInventory(Resources resource) {
+		return () => {
+			var parent = GetParent();
+			if (parent is Settlement settlement) {
+				if (!settlement.Inventory.TryAdd(resource, 1)) {
+					settlement.Inventory[resource]--;
+				}
+				Inventory[resource]++;
+			}
+		};
 	}
 
 	private List<string> Names => new List<string> {
@@ -123,4 +159,6 @@ public partial class Worker : Node, ISelectable {
 
 	public bool IsSelected { get; set; }
 
+	[Signal]
+	public delegate void InfoUpdatedEventHandler();
 }

@@ -3,9 +3,6 @@ public enum Resources {
     Stone,
     Food,
     Gold,
-}
-
-public enum ManufacturedResources {
     BasicBuildingMaterials,
     BasicTools,
     BasicTransportMaterials,
